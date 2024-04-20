@@ -107,6 +107,11 @@
     extraLuaConfig =
       let
         plugins = with pkgs.vimPlugins; [
+          nvim-dap
+          crates-nvim
+          rust-tools-nvim
+          neotest-rust
+          rustaceanvim
           # LazyVim
           LazyVim
           bufferline-nvim
@@ -148,8 +153,8 @@
           vim-illuminate
           vim-startuptime
           which-key-nvim
+          catppuccin-nvim
           { name = "LuaSnip"; path = luasnip; }
-          { name = "catppuccin"; path = catppuccin-nvim; }
           { name = "mini.ai"; path = mini-nvim; }
           { name = "mini.bufremove"; path = mini-nvim; }
           { name = "mini.comment"; path = mini-nvim; }
@@ -186,7 +191,7 @@
             { "williamboman/mason.nvim", enabled = false },
             -- import/override with your plugins
             { import = "lazyvim.plugins.extras.lang.typescript" },
-            { import = "lazyvim.plugins.extras.coding.copilot" },
+            -- { import = "lazyvim.plugins.extras.coding.copilot" },
             { import = "lazyvim.plugins.extras.lang.json" },
             { import = "lazyvim.plugins.extras.lang.python" },
             { import = "lazyvim.plugins.extras.linting.eslint" },
