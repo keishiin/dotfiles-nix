@@ -70,7 +70,7 @@
   programs.git = {
       enable = true;
       userName = "keishiin";
-      userEmail = "inferno2960@gmail.com"
+      userEmail = "inferno2960@gmail.com";
     };
 
   # a attempt at getting a neovim set up 
