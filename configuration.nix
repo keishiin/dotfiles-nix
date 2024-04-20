@@ -98,6 +98,7 @@
       alacritty
       firefox
       obsidian
+      bitwarden
     ];
   };
 
