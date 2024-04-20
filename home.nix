@@ -66,11 +66,6 @@
     # EDITOR = "emacs";
   };
 
-  programs.git = {
-      enable = true;
-      userName = "keishiin";
-      userEmail = "inferno2960@gmail.com";
-    };
 
   # a attempt at getting a neovim set up 
   programs.neovim = {
