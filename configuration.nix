@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports =
@@ -97,12 +97,15 @@
       kitty
       alacritty
       firefox
-    #  thunderbird
+      obsidian
     ];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = lib.optional (pkgs.obsidian.version == "1.4.16") "electron-25.9.0";
+
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -124,7 +127,6 @@
     gdu
     bottom
     python3
-    # libgccjit
     gcc_multi
     cargo
     lua
