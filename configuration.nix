@@ -99,6 +99,7 @@
       firefox
       obsidian
       bitwarden
+      google-chrome
     ];
   };
 
@@ -135,6 +136,7 @@
     unzip
     vscode-fhs
     cmake
+    pkg-config
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

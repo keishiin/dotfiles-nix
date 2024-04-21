@@ -26,18 +26,18 @@ return {
     },
     opts = {
       inlay_hints = {
-        enabled = hints_enabled,
+        enabled = false,
       },
       servers = {
         lua_ls = {
           settings = {
             Lua = {
-              hint = { enable = hints_enabled },
+              hint = { enable = false },
             },
           },
         },
         clangd = {
-          inlay_hints = hints_enabled,
+          inlay_hints = false,
         },
       },
     },
