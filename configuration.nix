@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports =
@@ -46,12 +46,20 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+
+  #hyprland stuff
+  programs.hyprland.enable = true;
+  programs.hyprland.nvidiaPatches = true;
+  #  programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+
+ # services.xserver.displayManager.sddm.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -74,7 +82,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -99,7 +107,7 @@
       firefox
       obsidian
       bitwarden
-      google-chrome
+      google-chrome  
     ];
   };
 
@@ -137,6 +145,7 @@
     vscode-fhs
     cmake
     pkg-config
+    neofetch
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -166,5 +175,8 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
   nix.settings.experimental-features = [ "nix-command" "flakes"];
-
+  nix.settings = {
+    substituters = ["https://hyprland.cachix.org"];
+    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+  };
 }
