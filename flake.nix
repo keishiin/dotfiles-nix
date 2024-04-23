@@ -10,9 +10,10 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+    spicetify-nix.url = "github:the-argus/spicetify-nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, spicetify-nix, ... } @ inputs:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
@@ -28,7 +29,7 @@
       homeConfigurations = {
         keishin = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = {inherit inputs;};
+          extraSpecialArgs = {inherit inputs; inherit spicetify-nix;};
           modules = [ ./home.nix ];
         };
       };

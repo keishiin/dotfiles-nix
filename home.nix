@@ -1,11 +1,14 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, spicetify-nix, ... }:
+let
+  spicePkgs = spicetify-nix.packages.${pkgs.system}.default;
 
+in
 {
 
   home.username = "keishin";
   home.homeDirectory = "/home/keishin";
 
-  home.stateVersion = "23.11"; 
+  home.stateVersion = "23.11";
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -28,10 +31,31 @@
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {};
+  home.file = { };
 
 
-  home.sessionVariables = {};
+  home.sessionVariables = { };
+
+  # allow spotify to be installed if you don't have unfree enabled already
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "spotify"
+  ];
+
+  # import the flake's module for your system
+  imports = [ spicetify-nix.homeManagerModule ];
+
+  # configure spicetify :)
+  programs.spicetify = {
+    enable = true;
+    theme = spicePkgs.themes.catppuccin;
+    colorScheme = "mocha";
+
+    enabledExtensions = with spicePkgs.extensions; [
+      fullAppDisplay
+      shuffle # shuffle+ (special characters are sanitized out of ext names)
+      hidePodcasts
+    ];
+  };
 
   # a attempt at getting a neovim set up 
   programs.neovim = {
@@ -227,11 +251,11 @@
     enableCompletion = true;
     enableAutosuggestions = true;
     initExtra = ''
-        [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-        alias dotfiles="cd ~/.dotfiles"
-        alias config="cd ~/.config"
-        alias rbd="sudo nixos-rebuild switch --flake .#KEISHIN"
-        alias hm="home-manager switch --flake ." 
+      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+      alias dotfiles="cd ~/.dotfiles"
+      alias config="cd ~/.config"
+      alias rbd="sudo nixos-rebuild switch --flake .#KEISHIN"
+      alias hm="home-manager switch --flake ." 
     '';
     zplug = {
       enable = true;
