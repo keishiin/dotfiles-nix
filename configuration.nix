@@ -53,7 +53,30 @@
   #hyprland stuff
   programs.hyprland.enable = true;
   programs.hyprland.enableNvidiaPatches = true;
+  programs.hyprland.xwayland.enable = true;
   #  programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+  environment.sessionVariables = {
+    WLR_NO_HARDWARE_CURSORS = "1";
+    NIXOS_OZONE_WL = "1";
+  };
+  
+ # i hate nvidia
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
+  services.xserver.videoDrivers = ["nvidia"];
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
