@@ -33,8 +33,6 @@
 
   home.sessionVariables = {};
 
-
-
   # a attempt at getting a neovim set up 
   programs.neovim = {
     enable = true;
@@ -175,6 +173,7 @@
             { "nvim-treesitter/nvim-treesitter", opts = { ensure_installed = {} } },
           },
         })
+        vim.opt.swapfile = false;
       '';
   };
 
@@ -220,7 +219,7 @@
     "${parsers}/parser";
 
   # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
-  xdg.configFile."nvim/lua".source = ./lua;
+  xdg.configFile."nvim/lua".source = ./lua/lua;
 
   # some zsh stuff
   programs.zsh = {
@@ -229,6 +228,10 @@
     enableAutosuggestions = true;
     initExtra = ''
         [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+        alias dotfiles="cd ~/.dotfiles"
+        alias config="cd ~/.config"
+        alias rbd="sudo nixos-rebuild switch --flake .#KEISHIN"
+        alias hm="home-manager switch --flake ." 
     '';
     zplug = {
       enable = true;
