@@ -166,10 +166,10 @@
     lua
     python311Packages.pip
     unzip
-    vscode-fhs
     cmake
     pkg-config
     neofetch
+    gnomeExtensions.unite
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
