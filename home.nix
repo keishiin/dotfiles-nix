@@ -10,7 +10,7 @@ in
 
   home.stateVersion = "23.11";
 
-  imports = [ nixvim.homeManagerModules.nixvim spicetify-nix.homeManagerModule ];
+  imports = [ nixvim.homeManagerModules.nixvim spicetify-nix.homeManagerModule ./configs/zsh.nix ];
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -58,41 +58,41 @@ in
       luasnip.enable = true;
 
       lsp.servers = {
-	nixd = {
-	  enable = true;
-	  settings.formatting.command = "nixpkgs-fmt";
-	};
+        nixd = {
+          enable = true;
+          settings.formatting.command = "nixpkgs-fmt";
+        };
 
-	rust-analyzer = {
-	  enable = true;
-	  installCargo = true;
-	  installRustc = true;
-	};
+        rust-analyzer = {
+          enable = true;
+          installCargo = true;
+          installRustc = true;
+        };
       };
 
-      nvim-cmp = {
-	enable = true;
-	autoEnableSources = true;
-	sources = [
-	  {name = "nvim_lsp";}
-	  {name = "path";}
-	  {name = "buffer";}
-	  {name = "luasnip";}
-	];
+      cmp = {
+        enable = true;
+        autoEnableSources = true;
+        settings.sources = [
+          { name = "nvim_lsp"; }
+          { name = "path"; }
+          { name = "buffer"; }
+          { name = "luasnip"; }
+        ];
 
-	mapping = {
-	  "<C-Space>" = "cmp.mapping.complete()";
+        settings.mapping = {
+          "<C-Space>" = "cmp.mapping.complete()";
           "<C-d>" = "cmp.mapping.scroll_docs(-4)";
           "<C-e>" = "cmp.mapping.close()";
           "<C-f>" = "cmp.mapping.scroll_docs(4)";
           "<CR>" = "cmp.mapping.confirm({ select = true })";
           "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-          "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})"; 
-	};
+          "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+        };
       };
     };
 
-    options = {
+    opts = {
       number = true;
       relativenumber = true;
       shiftwidth = 2;
@@ -102,26 +102,6 @@ in
     };
   };
 
-  # some zsh stuff
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    enableAutosuggestions = true;
-    initExtra = ''
-      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-      alias dotfiles="cd ~/.dotfiles"
-      alias config="cd ~/.config"
-      alias rbd="sudo nixos-rebuild switch --flake .#KEISHIN"
-      alias hm="home-manager switch --flake ." 
-    '';
-    zplug = {
-      enable = true;
-      plugins = [{
-        name = "romkatv/powerlevel10k";
-        tags = [ "as:theme" "depth:1" ];
-      }];
-    };
-  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
