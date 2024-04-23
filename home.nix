@@ -1,8 +1,4 @@
 { config, lib, pkgs, inputs, spicetify-nix, nixvim, ... }:
-let
-  spicePkgs = spicetify-nix.packages.${pkgs.system}.default;
-
-in
 {
 
   home.username = "keishin";
@@ -10,7 +6,12 @@ in
 
   home.stateVersion = "23.11";
 
-  imports = [ nixvim.homeManagerModules.nixvim spicetify-nix.homeManagerModule ./configs/zsh.nix ];
+  imports = [
+    nixvim.homeManagerModules.nixvim
+    spicetify-nix.homeManagerModule
+    ./configs/zsh.nix
+    ./configs/spicetify.nix
+  ];
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -30,18 +31,6 @@ in
     "spotify"
   ];
 
-  # configure spicetify :)
-  programs.spicetify = {
-    enable = true;
-    theme = spicePkgs.themes.catppuccin;
-    colorScheme = "mocha";
-
-    enabledExtensions = with spicePkgs.extensions; [
-      fullAppDisplay
-      shuffle
-      hidePodcasts
-    ];
-  };
 
   # using nixvim instead of what ever i was doing before
   programs.nixvim = {
