@@ -11,25 +11,30 @@
       inputs.hyprland.follows = "hyprland";
     };
     spicetify-nix.url = "github:the-argus/spicetify-nix";
+    nixvim = {
+      url = "github:/nix-community/nixvim/nixos-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, spicetify-nix, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, spicetify-nix, nixvim, ... } @ inputs:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
-    in {
+    in
+    {
       nixosConfigurations = {
         KEISHIN = lib.nixosSystem {
           inherit system;
-          specialArgs = {inherit inputs;};
+          specialArgs = { inherit inputs; };
           modules = [ ./configuration.nix ];
         };
       };
       homeConfigurations = {
         keishin = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = {inherit inputs; inherit spicetify-nix;};
+          extraSpecialArgs = { inherit inputs; inherit spicetify-nix; inherit nixvim; };
           modules = [ ./home.nix ];
         };
       };
