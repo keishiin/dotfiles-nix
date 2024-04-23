@@ -52,7 +52,7 @@
 
   #hyprland stuff
   programs.hyprland.enable = true;
-  programs.hyprland.nvidiaPatches = true;
+  programs.hyprland.enableNvidiaPatches = true;
   #  programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
 
   # Enable the GNOME Desktop Environment.
